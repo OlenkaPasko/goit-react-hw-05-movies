@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 //import PropTypes from 'prop-types';
-import CastList from '../CastList/CastList';
+//import CastList from '../CastList/CastList';
+import noAvatar from '../../images/noAvatar.jpg';
 
 const Cast = () => {
-const { movieId } = useParams();
-const [castList, setCastList] = useState([]);
-    
+  const { movieId } = useParams();
+  const [castList, setCastList] = useState([]);
+
   const API_KEY = '9cbb52e6579c256183b59d31049fbf06';
   const BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -21,11 +22,29 @@ const [castList, setCastList] = useState([]);
   }, [movieId]);
   return (
     <>
-      {castList && <CastList cast={castList} />}
-      {!castList && (
-        <div>
-          <p>There is no casts</p>
-        </div>
+      {' '}
+      {castList.length === 0 && <p>There is nothing to view</p>}
+      {castList && (
+        <ul>
+          {castList.map(item => {
+            const { character, name, profile_path, id } = item;
+            return (
+              <li key={id}>
+                <img
+                  src={
+                    profile_path
+                      ? `https://image.tmdb.org/t/p/original${profile_path}`
+                      : noAvatar
+                  }
+                  alt={name}
+                  width="200"
+                />
+                <p>{name}</p>
+                <p>Character: {character}</p>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </>
   );
