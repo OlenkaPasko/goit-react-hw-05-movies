@@ -19,7 +19,6 @@ const API_KEY = '9cbb52e6579c256183b59d31049fbf06';
   }, [movieId]);
   return (
     <>
-      {' '}
       {castList.length === 0 && <p>Sorry, there is nothing to view</p>}
       {castList && (
         <ul>

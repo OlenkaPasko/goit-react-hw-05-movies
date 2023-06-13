@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+//import { getPopularMovies } from '../servises/servises';
+
 const Home = () => {
-  const [collection, setCollection] = useState([]);
+  const [topMovies, setTopMovies] = useState([]);
   const location = useLocation();
 
   const API_KEY = '9cbb52e6579c256183b59d31049fbf06';
-  //const BASE_URL = 'https://api.themoviedb.org/3';
+  const BASE_URL = 'https://api.themoviedb.org/3';
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`)
+    fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
       .then(res => res.json())
-      .then(data => setCollection(data.results));
+      .then(data => setTopMovies(data.results));
   }, []);
 
   return (
     <>
       <h1>Trending today</h1>
       <ul>
-        {collection.map(item => {
+        {topMovies.map(item => {
           const { id, title, name } = item;
           return (
             <li key={id}>
